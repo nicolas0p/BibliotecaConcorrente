@@ -11,15 +11,13 @@ public class Equipe implements Observer, Runnable {
 
 	
 	private Lock lock;
-	private Condition condition;
 	private int alunosRestantes;
 	private Lider lider;
 	private List<Aluno> alunos;
 	
 	public Equipe() {
 		lock = new ReentrantLock();
-		condition = lock.newCondition();
-		lider = new Lider(lock, condition);
+		lider = new Lider(lock);
 		for (int i = 0; i < 3; ++i) {
 			alunos.add(new Aluno(lock, condition));
 		}
@@ -29,7 +27,10 @@ public class Equipe implements Observer, Runnable {
 	public void update(Observable o, Object arg) {
 		--integrantesRestantes;
 		if (integrantesRestantes == 0) {
-			
+			Livro livro = lider.pegaLivro();
+			for (int i = 0; i < 3; ++i) {
+				alunos.livro
+			}
 		}
 	}
 

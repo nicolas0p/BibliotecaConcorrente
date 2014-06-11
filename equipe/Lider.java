@@ -21,6 +21,12 @@ public class Lider implements Observer, Runnable {
 		}
 		Collections.shuffle(sequenciaLeitura);
 		sequenciaLeitura.subList(5, 8).clear();
+		System.out.println(sequenciaLeitura.get(0));
+		System.out.println(sequenciaLeitura.get(1));
+		System.out.println(sequenciaLeitura.get(2));
+		System.out.println(sequenciaLeitura.get(3));
+		System.out.println(sequenciaLeitura.get(4));
+		System.out.println(sequenciaLeitura.get(5));
 	}
 	
 	

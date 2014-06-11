@@ -21,6 +21,8 @@ public class Aluno extends Observable implements Runnable {
 		this.livro = livro;
 	}
 	
+	
+	
 	public void run() {
 //		boolean conseguiu = false;	
 //		while(!conseguiu) {
@@ -37,8 +39,8 @@ public class Aluno extends Observable implements Runnable {
 		}
 		livro.ler();
 		setChanged();
-		notifyObservers();
+		notifyObservers();condition.signalAll();
 		lock.unlock();         /////tretaaa ordem entre signallall e unlock
-		condition.signalAll();
+		
 	}	
 }
