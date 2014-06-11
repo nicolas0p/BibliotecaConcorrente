@@ -7,6 +7,8 @@ import java.util.concurrent.locks.Condition;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
+import estante.*;
+
 public class Equipe implements Observer, Runnable {
 
 	
@@ -40,5 +42,12 @@ public class Equipe implements Observer, Runnable {
 		
 	}
 	
+	public void repassarLivro(Livro livro) {
+		for(Aluno aluno : alunos) {
+			aluno.setLivro(livro);
+			Thread threadAluno = new Thread(aluno);
+			threadAluno.start();
+		}
+	}
 	
 }
