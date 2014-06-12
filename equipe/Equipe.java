@@ -8,6 +8,8 @@ import java.util.Observer;
 import estante.Estante;
 import estante.Livro;
 
+import estante.*;
+
 public class Equipe implements Observer, Runnable {
 
 	private int alunosRestantes;
