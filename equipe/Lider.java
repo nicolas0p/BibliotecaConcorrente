@@ -32,7 +32,7 @@ public class Lider implements Runnable {
 		for (int i = 0; i < sequenciaLeitura.size(); ++i) {
 			try {	
 				livroAtual = estante.pegarLivro(sequenciaLeitura.get(i));
-				System.out.println("Lider da equipe " + Thread.currentThread().getName() + " conseguiu pegar o livro" + sequenciaLeitura.get(i));
+				//System.out.println("Lider da equipe " + Thread.currentThread().getName() + " conseguiu pegar o livro" + sequenciaLeitura.get(i));
 				sequenciaLeitura.remove(i);
 				livroAtual.ler();
 				++livrosLidos;
@@ -51,19 +51,19 @@ public class Lider implements Runnable {
 
 	@Override
 	public void run() {
-		System.out.println("Iniciando lider da equipe " + Thread.currentThread().getName());
+		//System.out.println("Iniciando lider da equipe " + Thread.currentThread().getName());
 		pegaLivro();
 		while (true) {
 			try {
 				Thread.sleep(Long.MAX_VALUE);
 			}
 			catch (InterruptedException e) {
-				System.out.println("Lider da equipe " + Thread.currentThread().getName() + " devolvendo livro!");
+				//System.out.println("Lider da equipe " + Thread.currentThread().getName() + " devolvendo livro!");
 				estante.retornarLivro(livroAtual);
 				if (livrosLidos < 5) {
 					pegaLivro();
 				} else {
-					equipe.setConcluida(true);
+					equipe.entregarTrabalho();
 					return;
 				}
 			}

@@ -15,7 +15,7 @@ public class Livro {
 
 	public void ler() {
 		lockEquipe.lock();
-		System.out.println("Integrante da equipe " + Thread.currentThread().getName() + " lendo o livro");
+		//System.out.println("Integrante da equipe " + Thread.currentThread().getName() + " lendo o livro");
 		try {
 			Thread.sleep(tempoDeLeitura);
 		} catch (InterruptedException e) {
