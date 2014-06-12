@@ -11,16 +11,32 @@ public class Estante {
 	private List<Lock> lockLivros;
 	private List<Integer> vezesPego;
 
-	public Estante() {
-		livros = new ArrayList<Livro>(8);
-		int[] tempoDeLeitura = {4,4,4,4,7,7,7,7};
-		lockLivros = new ArrayList<Lock>(8);
+	public Estante(int nroDeLivros) {
+		livros = new ArrayList<Livro>(nroDeLivros);
+		List<Integer> tempoDeLeitura = gerarTemposDeLeitura(nroDeLivros);
+		lockLivros = new ArrayList<Lock>(nroDeLivros);
 		vezesPego = new ArrayList<Integer>();
-		for(int i = 0 ; i < 8 ; ++i) {
+		for(int i = 0 ; i < nroDeLivros ; ++i) {
 			vezesPego.add(0);
-			livros.add(new Livro(tempoDeLeitura[i]));
+			livros.add(new Livro(tempoDeLeitura.get(i)));
 			lockLivros.add(new ReentrantLock());
 		}
+	}
+	
+	private List<Integer> gerarTemposDeLeitura(int quantidade) {
+		List<Integer> tempoDeLeitura = new ArrayList<Integer>(quantidade);
+		tempoDeLeitura.add(4); tempoDeLeitura.add(4);
+		tempoDeLeitura.add(4); tempoDeLeitura.add(4);
+		tempoDeLeitura.add(7); tempoDeLeitura.add(7);
+		tempoDeLeitura.add(7); tempoDeLeitura.add(7);
+		for(int i = 8 ; i < quantidade ; ++i) {
+			tempoDeLeitura.add(6);
+		}
+		return tempoDeLeitura;
+	}
+	
+	public int nroDeLivros() {
+		return livros.size();
 	}
 
 	public Livro pegarLivro(int index) throws LivroPegoException {
@@ -38,7 +54,7 @@ public class Estante {
 	
 	public String maisLidos() {
 		String s = "";
-		for (int i = 0; i < 8; ++i) {
+		for (int i = 0; i < vezesPego.size() ; ++i) {
 			s += "Livro " + i + " foi pego " + vezesPego.get(i) + " vezes. \n";
 		}
 		return s;

@@ -17,12 +17,12 @@ public class Lider implements Runnable {
 	private int livrosLidos;
 	Livro livroAtual;
 
-	public Lider(Estante estante, Equipe equipe) {
+	public Lider(Estante estante, Equipe equipe, int totalDeLivros) {
 		livrosLidos = 0;
 		this.estante = estante;
 		this.equipe = equipe;
 		sequenciaLeitura = new ArrayList<Integer>();
-		for (int i = 0; i < 8; ++i) {
+		for (int i = 0; i < totalDeLivros; ++i) {
 			sequenciaLeitura.add(i);
 		}
 	}
@@ -67,7 +67,7 @@ public class Lider implements Runnable {
 					return;
 				}
 			}
-		}		
+		}
 	}
 
 	public void retornarLivro(Livro livro) {

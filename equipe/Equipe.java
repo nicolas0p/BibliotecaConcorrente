@@ -20,7 +20,7 @@ public class Equipe implements Observer, Runnable {
 		concluida = false;
 		alunos = new ArrayList<Aluno>();
 		alunosRestantes = 3;
-		lider = new Lider(estante, this);
+		lider = new Lider(estante, this, estante.nroDeLivros());
 		for (int i = 0; i < 3; ++i) {
 			Aluno aluno = new Aluno();
 			aluno.addObserver(this);
