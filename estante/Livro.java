@@ -12,12 +12,14 @@ public class Livro {
 		lockEquipe = new ReentrantLock();
 		tempoDeLeitura = tempo;
 	}
-	
+
 	public void ler() {
 		lockEquipe.lock();
-		try{
+		System.out.println("Integrante da equipe " + Thread.currentThread().getName() + " lendo o livro");
+		try {
 			Thread.sleep(tempoDeLeitura);
-		} catch (InterruptedException e) {}
+		} catch (InterruptedException e) {
+		}
 		lockEquipe.unlock();
 	}
 }

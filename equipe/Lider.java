@@ -3,47 +3,73 @@ package equipe;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Observable;
-import java.util.Observer;
 
 import estante.Estante;
+import estante.Livro;
+import estante.LivroPegoException;
 
-public class Lider implements Observer, Runnable {
-	
+public class Lider implements Runnable {
+
 	private Estante estante;
 	private Equipe equipe;
 	List<Integer> sequenciaLeitura;
-	
-	public Lider() {
-		sequenciaLeitura = new ArrayList<>(8);
+	boolean bloqueado = false;
+	private int livrosLidos;
+	Livro livroAtual;
+
+	public Lider(Estante estante, Equipe equipe) {
+		livrosLidos = 0;
+		this.estante = estante;
+		this.equipe = equipe;
+		sequenciaLeitura = new ArrayList<Integer>();
 		for (int i = 0; i < 8; ++i) {
 			sequenciaLeitura.add(i);
 		}
-		Collections.shuffle(sequenciaLeitura);
-		sequenciaLeitura.subList(5, 8).clear();
-		System.out.println(sequenciaLeitura.get(0));
-		System.out.println(sequenciaLeitura.get(1));
-		System.out.println(sequenciaLeitura.get(2));
-		System.out.println(sequenciaLeitura.get(3));
-		System.out.println(sequenciaLeitura.get(4));
-		System.out.println(sequenciaLeitura.get(5));
 	}
-	
-	
-	public void pegaLivro() {
-		
-	}
-	
-	
 
-//	@Override
-	public void update(Observable o, Object arg) {
-////		estante.recebeLivro(livro);
-////		livro = estante.pegaLivro();
+	private void pegaLivro() {
+		Collections.shuffle(sequenciaLeitura);
+		for (int i = 0; i < sequenciaLeitura.size(); ++i) {
+			try {	
+				livroAtual = estante.pegarLivro(sequenciaLeitura.get(i));
+				System.out.println("Lider da equipe " + Thread.currentThread().getName() + " conseguiu pegar o livro" + sequenciaLeitura.get(i));
+				sequenciaLeitura.remove(i);
+				livroAtual.ler();
+				++livrosLidos;
+				equipe.repassarLivro(livroAtual);
+				return;
+			}
+			catch (LivroPegoException e) {
+				//System.out.println("Lider da equpe " + Thread.currentThread().getName() + " nao conseguiu pegar o livro" + sequenciaLeitura.get(i));
+				if (i == sequenciaLeitura.size() - 1) {
+					Collections.shuffle(sequenciaLeitura);
+					i = 0;
+				}
+			}
+		}
 	}
 
 	@Override
 	public void run() {
-		
+		System.out.println("Iniciando lider da equipe " + Thread.currentThread().getName());
+		pegaLivro();
+		while (true) {
+			try {
+				Thread.sleep(Long.MAX_VALUE);
+			}
+			catch (InterruptedException e) {
+				System.out.println("Lider da equipe " + Thread.currentThread().getName() + " devolvendo livro!");
+				estante.retornarLivro(livroAtual);
+				if (livrosLidos < 5) {
+					pegaLivro();
+				} else {
+					return;
+				}
+			}
+		}		
+	}
+
+	public void retornarLivro(Livro livro) {
+		estante.retornarLivro(livro);
 	}
 }
