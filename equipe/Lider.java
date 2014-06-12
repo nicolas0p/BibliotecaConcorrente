@@ -63,6 +63,7 @@ public class Lider implements Runnable {
 				if (livrosLidos < 5) {
 					pegaLivro();
 				} else {
+					equipe.setConcluida(true);
 					return;
 				}
 			}

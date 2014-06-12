@@ -8,16 +8,16 @@ import java.util.Observer;
 import estante.Estante;
 import estante.Livro;
 
-import estante.*;
-
 public class Equipe implements Observer, Runnable {
 
 	private int alunosRestantes;
 	private Lider lider;
 	private List<Aluno> alunos;
 	private Thread threadLider;
+	boolean concluida;
 
 	public Equipe(Estante estante) {
+		concluida = false;
 		alunos = new ArrayList<Aluno>();
 		alunosRestantes = 3;
 		lider = new Lider(estante, this);
@@ -26,6 +26,14 @@ public class Equipe implements Observer, Runnable {
 			aluno.addObserver(this);
 			alunos.add(aluno);
 		}
+	}
+
+	public boolean isConcluida() {
+		return concluida;
+	}
+
+	public void setConcluida(boolean concluida) {
+		this.concluida = concluida;
 	}
 
 	public void repassarLivro(Livro livro) {
