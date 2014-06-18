@@ -1,21 +1,20 @@
-package equipe;
+package BibliotecaConcorrente.equipe;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import estante.Estante;
-import estante.Livro;
-import estante.LivroPegoException;
+import BibliotecaConcorrente.estante.Estante;
+import BibliotecaConcorrente.estante.Livro;
+import BibliotecaConcorrente.estante.LivroPegoException;
 
 public class Lider implements Runnable {
 
 	private Estante estante;
 	private Equipe equipe;
-	List<Integer> sequenciaLeitura;
-	boolean bloqueado = false;
+	private List<Integer> sequenciaLeitura;
 	private int livrosLidos;
-	Livro livroAtual;
+	private Livro livroAtual;
 
 	public Lider(Estante estante, Equipe equipe, int totalDeLivros) {
 		livrosLidos = 0;

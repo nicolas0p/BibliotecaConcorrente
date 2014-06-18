@@ -1,31 +1,33 @@
-package professor;
+package BibliotecaConcorrente.professor;
 
 import java.util.Observable;
 import java.util.Observer;
 
-import equipe.Equipe;
-import estante.Estante;
+import BibliotecaConcorrente.equipe.Equipe;
+import BibliotecaConcorrente.estante.Estante;
 
 public class Professor implements Observer {
 	
-	int totalEquipesConcluidas;
-	int equipesConcluidasPrazo;
-	long tempoInicio;
-	Estante estante;
+	private int totalEquipesConcluidas;
+	private int equipesConcluidasPrazo;
+	private long tempoInicio;
+	private Estante estante;
+	private boolean concluido;
 	
 	public Professor() {
 		totalEquipesConcluidas = 0;
 		equipesConcluidasPrazo = 0;
+		concluido = false;
 	}
 	
-	public void iniciarTrabalho() throws InterruptedException {
-		estante = new Estante(8);
+	public void iniciarTrabalho(int quantidadeLivros) throws InterruptedException {
+		estante = new Estante(quantidadeLivros);
 		tempoInicio = System.currentTimeMillis();
 		for (int i = 0; i < 15; ++i) {
 			Equipe equipe = new Equipe(estante);
 			equipe.addObserver(this);
 			new Thread(equipe, "" + i).start();
-		}		
+		}
 	}
 
 	@Override
@@ -36,8 +38,19 @@ public class Professor implements Observer {
 			++equipesConcluidasPrazo;
 		}
 		if (totalEquipesConcluidas == 15) {
+			concluido = true;
 			mostrarResultados();
 		}
+	}
+	
+	public int equipesConcluidasNoPrazo() {
+		while(!concluido){
+			try {
+				Thread.sleep(50);
+			} catch (InterruptedException e) {
+			}
+		}
+		return equipesConcluidasPrazo;
 	}
 
 	private void mostrarResultados() {

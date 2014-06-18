@@ -1,12 +1,12 @@
-package equipe;
+package BibliotecaConcorrente.equipe;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
-import estante.Estante;
-import estante.Livro;
+import BibliotecaConcorrente.estante.Estante;
+import BibliotecaConcorrente.estante.Livro;
 
 public class Equipe extends Observable implements Observer, Runnable {
 
@@ -18,7 +18,7 @@ public class Equipe extends Observable implements Observer, Runnable {
 	public Equipe(Estante estante) {
 		alunos = new ArrayList<Aluno>();
 		alunosRestantes = 3;
-		lider = new Lider(estante, this, estante.nroDeLivros());
+		lider = new Lider(estante, this, estante.quantidadeDeLivros());
 		for (int i = 0; i < 3; ++i) {
 			Aluno aluno = new Aluno();
 			aluno.addObserver(this);

@@ -1,4 +1,4 @@
-package estante;
+package BibliotecaConcorrente.estante;
 
 public class LivroPegoException extends Exception {
 

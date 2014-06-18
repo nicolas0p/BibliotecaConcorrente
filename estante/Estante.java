@@ -1,4 +1,4 @@
-package estante;
+package BibliotecaConcorrente.estante;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,7 +35,7 @@ public class Estante {
 		return tempoDeLeitura;
 	}
 	
-	public int nroDeLivros() {
+	public int quantidadeDeLivros() {
 		return livros.size();
 	}
 
@@ -44,7 +44,7 @@ public class Estante {
 			vezesPego.set(index, vezesPego.get(index) + 1);
 			return livros.get(index);
 		}
-		throw new LivroPegoException(); 
+		throw new LivroPegoException();
 	}
 
 	public void retornarLivro(Livro retornado) {

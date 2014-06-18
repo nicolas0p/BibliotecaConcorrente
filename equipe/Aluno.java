@@ -1,7 +1,7 @@
-package equipe;
+package BibliotecaConcorrente.equipe;
 
 import java.util.Observable;
-import estante.Livro;
+import BibliotecaConcorrente.estante.Livro;
 
 public class Aluno extends Observable implements Runnable {
 
